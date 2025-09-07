@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+    <style>
+        .container {
+            border: 3px solid red;
+            height: 690px;
+            width: 40%;
+            margin: auto;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            background-image: linear-gradient(blue, white, red);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        #opchoice, #yourchoice {
+            border: 2px solid white;
+            height: 150px;
+            width: 150px;
+            background-image: linear-gradient(white, gray);
+            object-fit: cover;
+        }
+
+        #choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #choices img {
+            height: 100px;
+            width: 100px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #choices img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Opponent Score</h2>
+        <h2 id="opscore">0</h2>
+        <center>
+            <img id="opchoice" src=""><br><br>
+            <img id="yourchoice" src="">
+        </center><br><br>
+        <div id="choices"></div>
+        <h2>Your Score</h2>
+        <h2 id="urscore">0</h2>
+    </div>
+
+    <script>
+        let you;
+        let yourscore = 0;
+        let opponent;
+        let opponentscore = 0;
+        const ch = ["rock", "paper", "scissor"];
+
+        window.onload = function () {
+            for (let i = 0; i < ch.length; i++) {
+                let choice = document.createElement("img");
+                choice.id = ch[i];
+                choice.src = ch[i] + ".jpeg";
+                choice.alt = ch[i];
+                choice.addEventListener("click", selectChoice);
+                document.getElementById("choices").appendChild(choice);
+            }
+        }
+
+        function selectChoice() {
+            you = this.id;
+            document.getElementById("yourchoice").src = you + ".jpeg";
+
+            opponent = ch[Math.floor(Math.random() * 3)];
+            document.getElementById("opchoice").src = opponent + ".jpeg";
+
+            if (you === opponent) {
+                // Tie - no points
+            } else if (
+                (you === "rock" && opponent === "scissor") ||
+                (you === "paper" && opponent === "rock") ||
+                (you === "scissor" && opponent === "paper")
+            ) {
+                yourscore++;
+            } else {
+                opponentscore++;
+            }
+
+            document.getElementById("urscore").innerHTML = yourscore;
+            document.getElementById("opscore").innerHTML = opponentscore;
+        }
+    </script>
+</body>
+</html>
